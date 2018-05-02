@@ -6,12 +6,13 @@
   "scripts": {
     "init-project": "npm init && npm install && run-s init:*",
     "init:dir-src": "shx mkdir -p src/components src/containers src/images src/vendor",
+    "dev": "webpack-dev-server --hot --env development",
+    "start": "npm run dev",
+    "lint": "run-s lint:*",
+    "lint:html": "html5v src/index.html",
     "lint:js": "eslint --ext .js src/",
-    "build": "webpack --env production",
-    "build:img": "shx cp -r src/images build/images",
-    "build:lib": "shx cp -r src/vendor build/vendor",
-    "start": "webpack-dev-server --hot --env development",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "build": "webpack --env production"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "clean-webpack-plugin": "^0.1.19",
+    "copy-webpack-plugin": "^4.5.1",
     "css-loader": "^0.28.11",
     "eslint": "^4.19.1",
     "eslint-plugin-flowtype": "^2.46.3",
