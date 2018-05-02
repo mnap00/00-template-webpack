@@ -1,5 +1,6 @@
 const path = require('path');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+//const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const OptimizeJsPlugin = require('optimize-js-plugin');
@@ -18,6 +19,16 @@ module.exports = (env) => {
             plugins.push(
                 new CleanWebpackPlugin(['dist'])
             ),
+            //            plugins.push(
+            //                new CopyWebpackPlugin([
+            //                    {
+            //                        from: path.resolve(__dirname, './static'),
+            //                        to: path.resolve(__dirname, '../dist/assets')
+            //                    }
+            //                ], {
+            //                    ignore: ['*.js', '*.css', '*.html']
+            //                })
+            //            ),
             plugins.push(
                 new ExtractTextPlugin({
                     filename: 'css/[name].[hash].css',
@@ -34,6 +45,7 @@ module.exports = (env) => {
     return {
         mode: env || 'production',
         entry: './src/index.js',
+        devtool: env !== 'production' ? 'inline-source-map' : false,
         output: {
             filename: 'js/[name].bundle.js',
             path: path.resolve(__dirname, 'dist')
@@ -107,7 +119,7 @@ module.exports = (env) => {
                         }]
                 },
                 {
-                    test: /\.(woff|woff2|eot|ttf|otf)$/,
+                    test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
                     exclude: /images/,
                     use: env !== 'production'
                         ? [{
