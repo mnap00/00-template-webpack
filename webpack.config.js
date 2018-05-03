@@ -76,24 +76,14 @@ module.exports = (env) => {
                     }
                 },
                 {
-                    test: /\.css$/,
+                    test: /\.s?[ac]ss$/,
                     use: [
-                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-                        {
-                            loader: 'css-loader', options: {
-                                modules: true
-                            }
-                        }
-                    ]
-                },
-                {
-                    test: /\.(sass|scss)$/,
-                    use: [
-                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        devMode ? 'style-loader?sourceMap' : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader', options: {
                                 sourceMap: true,
-                                modules: true
+                                modules: true,
+                                localIdentName: '[local]___[hash:7]'
                             }
                         }, {
                             loader: 'sass-loader', options: {
