@@ -14,8 +14,10 @@ const plugins = [
 ];
 
 module.exports = (env) => {
-    (env === 'production' || env === '')
-        ? (
+    const devMode = env !== 'production';
+    devMode
+        ? null
+        : (
             plugins.push(
                 new CleanWebpackPlugin(['dist'])
             ),
@@ -39,13 +41,12 @@ module.exports = (env) => {
                     sourceMap: false
                 })
             )
-        )
-        : null;
+        );
 
     return {
         mode: env || 'production',
         entry: './src/index.js',
-        devtool: env !== 'production' ? 'inline-source-map' : false,
+        devtool: devMode ? 'inline-source-map' : false,
         output: {
             filename: 'js/[name].bundle.js',
             path: path.resolve(__dirname, 'dist')
@@ -56,7 +57,7 @@ module.exports = (env) => {
                     test: /\.js$/,
                     loader: 'babel-loader',
                     options: {
-                        plugins: env !== 'production'
+                        plugins: devMode
                             ? ['react-hot-loader/babel']
                             : []
                     }
@@ -87,7 +88,8 @@ module.exports = (env) => {
                             loader: 'style-loader'
                         }, {
                             loader: 'css-loader', options: {
-                                sourceMap: true
+                                sourceMap: true,
+                                modules: true
                             }
                         }, {
                             loader: 'sass-loader', options: {

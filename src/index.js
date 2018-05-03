@@ -15,3 +15,5 @@ function component() {
 }
 
 document.body.appendChild(component());
+
+console.log(process.env.NODE_ENV);
