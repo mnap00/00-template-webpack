@@ -76,14 +76,32 @@ module.exports = (env) => {
                     }
                 },
                 {
-                    test: /\.s?[ac]ss$/,
+                    test: /^((?!\.?(main|style)).)*s?[ac]ss$/,
                     use: [
-                        devMode ? 'style-loader?sourceMap' : MiniCssExtractPlugin.loader,
+                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader', options: {
-                                sourceMap: true,
+                                camelCase: true,
+                                importLoaders: 1,
+                                localIdentName: '[local]___[hash:7]',
                                 modules: true,
-                                localIdentName: '[local]___[hash:7]'
+                                sourceMap: true
+                            }
+                        }, {
+                            loader: 'sass-loader', options: {
+                                sourceMap: true
+                            }
+                        }
+                    ]
+                },
+                {
+                    test: /\.?(main|style).s?[ac]ss$/,
+                    use: [
+                        devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
+                        {
+                            loader: 'css-loader', options: {
+                                importLoaders: 1,
+                                sourceMap: true
                             }
                         }, {
                             loader: 'sass-loader', options: {
@@ -94,7 +112,7 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.(png|svg|jp(e*)g|gif)$/,
-                    exclude: /fonts/,
+                    exclude: path.resolve(__dirname, 'src/fonts'),
                     use: [
                         {
                             loader: 'url-loader', options: {
@@ -108,7 +126,7 @@ module.exports = (env) => {
                 },
                 {
                     test: /\.(woff|woff2|eot|ttf|otf|svg)$/,
-                    exclude: /images/,
+                    exclude: path.resolve(__dirname, 'src/images'),
                     use: [
                         {
                             loader: 'url-loader', options: {
