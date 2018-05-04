@@ -82,9 +82,17 @@ module.exports = (env) => {
                         {
                             loader: 'css-loader', options: {
                                 camelCase: true,
-                                importLoaders: 1,
+                                importLoaders: 2,
                                 localIdentName: '[local]___[hash:7]',
                                 modules: true,
+                                sourceMap: true
+                            }
+                        }, {
+                            loader: 'postcss-loader', options: {
+                                ident: 'postcss',
+                                plugins: () => [
+                                    require('autoprefixer')()
+                                ],
                                 sourceMap: true
                             }
                         }, {
@@ -100,7 +108,15 @@ module.exports = (env) => {
                         devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
                         {
                             loader: 'css-loader', options: {
-                                importLoaders: 1,
+                                importLoaders: 2,
+                                sourceMap: true
+                            }
+                        }, {
+                            loader: 'postcss-loader', options: {
+                                ident: 'postcss',
+                                plugins: () => [
+                                    require('autoprefixer')()
+                                ],
                                 sourceMap: true
                             }
                         }, {
