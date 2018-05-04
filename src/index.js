@@ -1,5 +1,7 @@
-require('./main.scss');
+import './main.scss';
+import './style.css';
 import Icon from './images/icon.png';
+import Home from './images/home.svg';
 
 function component() {
     var element = document.createElement('div');
@@ -10,6 +12,10 @@ function component() {
     var myIcon = new Image();
     myIcon.src = Icon;
     element.appendChild(myIcon);
+
+    var myHome = new Image();
+    myHome.src = Home;
+    element.appendChild(myHome);
 
     return element;
 }
